@@ -8,6 +8,7 @@ import Dashboard     from './pages/Dashboard';
 import Purchases     from './pages/Purchases';
 import Transfers     from './pages/Transfers';
 import Assignments   from './pages/Assignments';
+import Personnel     from './pages/Personnel';
 
 function Layout({ children }) {
   return (
@@ -56,6 +57,11 @@ export default function App() {
           <Route path="/assignments" element={
             <ProtectedRoute roles={['admin', 'base_commander']}>
               <Layout><Assignments /></Layout>
+            </ProtectedRoute>
+          } />
+          <Route path="/personnel" element={
+            <ProtectedRoute roles={['admin', 'base_commander']}>
+              <Layout><Personnel /></Layout>
             </ProtectedRoute>
           } />
           <Route path="*" element={<Navigate to="/" />} />

@@ -6,6 +6,7 @@ const connectDB = require('./config/db');
 const User  = require('./models/User');
 const Base  = require('./models/Base');
 const Asset = require('./models/Asset');
+const Personnel = require('./models/Personnel');
 
 (async () => {
   await connectDB();
@@ -14,7 +15,8 @@ const Asset = require('./models/Asset');
   await Promise.all([
     User.deleteMany({}),
     Base.deleteMany({}),
-    Asset.deleteMany({})
+    Asset.deleteMany({}),
+    Personnel.deleteMany({})
   ]);
 
   // Bases
@@ -41,6 +43,16 @@ const Asset = require('./models/Asset');
     { name: 'Commander Alpha',   email: 'alpha@mams.mil',       passwordHash: 'alpha123',     role: 'base_commander',    assignedBase: alpha._id },
     { name: 'Commander Bravo',   email: 'bravo@mams.mil',       passwordHash: 'bravo123',     role: 'base_commander',    assignedBase: bravo._id },
     { name: 'Logistics Officer', email: 'logistics@mams.mil',   passwordHash: 'logistics123', role: 'logistics_officer', assignedBase: alpha._id },
+  ]);
+
+  // Personnel
+  await Personnel.insertMany([
+    { name: 'Sgt. John Smith',  personnelId: 'US-2049', baseId: alpha._id },
+    { name: 'Cpl. Jane Doe',    personnelId: 'US-2050', baseId: alpha._id },
+    { name: 'Pvt. Mark Davis',  personnelId: 'US-2051', baseId: alpha._id },
+    { name: 'Capt. Alex Brown', personnelId: 'US-3011', baseId: bravo._id },
+    { name: 'Sgt. Emily White', personnelId: 'US-3012', baseId: bravo._id },
+    { name: 'Cpl. Tom Green',   personnelId: 'US-3013', baseId: bravo._id },
   ]);
 
   console.log('✅ Seed complete!');

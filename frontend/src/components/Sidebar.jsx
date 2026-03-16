@@ -1,11 +1,13 @@
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { LayoutDashboard, Package, RefreshCw, User, Users, LogOut, Shield } from 'lucide-react';
 
 const links = [
-  { to: '/',            icon: '📊', label: 'Dashboard',          roles: ['admin','base_commander','logistics_officer'] },
-  { to: '/purchases',   icon: '📦', label: 'Purchases',           roles: ['admin','base_commander','logistics_officer'] },
-  { to: '/transfers',   icon: '🔄', label: 'Transfers',           roles: ['admin','base_commander','logistics_officer'] },
-  { to: '/assignments', icon: '👤', label: 'Assignments',         roles: ['admin','base_commander'] },
+  { to: '/',            icon: <LayoutDashboard size={18} />, label: 'Dashboard',          roles: ['admin','base_commander','logistics_officer'] },
+  { to: '/purchases',   icon: <Package size={18} />, label: 'Purchases',           roles: ['admin','base_commander','logistics_officer'] },
+  { to: '/transfers',   icon: <RefreshCw size={18} />, label: 'Transfers',           roles: ['admin','base_commander','logistics_officer'] },
+  { to: '/assignments', icon: <User size={18} />, label: 'Assignments',         roles: ['admin','base_commander'] },
+  { to: '/personnel',   icon: <Users size={18} />, label: 'Personnel',           roles: ['admin','base_commander'] },
 ];
 
 const roleLabels = {
@@ -20,7 +22,7 @@ export default function Sidebar() {
   return (
     <aside className="sidebar">
       <div className="sidebar-logo">
-        <span className="logo-icon">🪖</span>
+        <span className="logo-icon"><Shield size={24} /></span>
         <span>MAMS</span>
       </div>
       <div className="sidebar-role-tag">
@@ -62,7 +64,7 @@ export default function Sidebar() {
           {user?.email}
         </div>
         <button className="sidebar-logout" onClick={logout}>
-          <span>🚪</span>
+          <span><LogOut size={16} /></span>
           <span>Logout</span>
         </button>
       </div>

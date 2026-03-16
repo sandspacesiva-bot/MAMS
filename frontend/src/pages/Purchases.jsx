@@ -3,6 +3,7 @@ import api from '../api/axios';
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 import { format } from 'date-fns';
+import { Package, X, Save, Plus } from 'lucide-react';
 
 const INITIAL_FORM = { assetId: '', baseId: '', quantity: '', unitCost: '', purchaseDate: '', notes: '' };
 
@@ -40,7 +41,7 @@ export default function Purchases() {
     setSubmitting(true);
     try {
       await api.post('/purchases', form);
-      toast.success('✅ Purchase recorded successfully');
+      toast.success('Purchase recorded successfully');
       setShowForm(false);
       setForm(INITIAL_FORM);
       load();
@@ -57,7 +58,7 @@ export default function Purchases() {
     <div className="page-content">
       <div className="page-header">
         <div>
-          <h1 className="page-title">📦 Purchases</h1>
+          <h1 className="page-title"><Package size={28} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '8px' }} /> Purchases</h1>
           <p className="page-subtitle">Record and track asset acquisitions</p>
         </div>
         <button
@@ -65,7 +66,7 @@ export default function Purchases() {
           className="btn btn-primary"
           onClick={() => setShowForm(s => !s)}
         >
-          {showForm ? '✕ Cancel' : '+ New Purchase'}
+          {showForm ? <><X size={16} style={{ display: 'inline', verticalAlign: 'middle' }} /> Cancel</> : <><Plus size={16} style={{ display: 'inline', verticalAlign: 'middle' }} /> New Purchase</>}
         </button>
       </div>
 
@@ -116,8 +117,8 @@ export default function Purchases() {
                 value={form.notes} onChange={e => setForm({ ...form, notes: e.target.value })} />
             </div>
           </div>
-          <button id="pur-submit" className="btn btn-primary" onClick={submit} disabled={submitting}>
-            {submitting ? 'Saving…' : '💾 Record Purchase'}
+          <button id="pur-submit" className="btn btn-primary" onClick={submit} disabled={submitting} style={{ display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'center' }}>
+            {submitting ? 'Saving…' : <><Save size={16} /> Record Purchase</>}
           </button>
         </div>
       )}
@@ -137,8 +138,9 @@ export default function Purchases() {
         </select>
         {(filters.startDate || filters.endDate || filters.assetType) && (
           <button className="btn btn-secondary"
-            onClick={() => setFilters({ startDate: '', endDate: '', assetType: '' })}>
-            ✕ Clear
+            onClick={() => setFilters({ startDate: '', endDate: '', assetType: '' })}
+            style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <X size={14} /> Clear
           </button>
         )}
       </div>
@@ -157,7 +159,7 @@ export default function Purchases() {
               <tr>
                 <td colSpan={9}>
                   <div className="empty-state">
-                    <div className="empty-state-icon">📦</div>
+                    <div className="empty-state-icon"><Package size={48} /></div>
                     <div className="empty-state-text">No purchases found. Record your first purchase above.</div>
                   </div>
                 </td>

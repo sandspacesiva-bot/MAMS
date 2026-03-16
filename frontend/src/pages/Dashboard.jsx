@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip,
   ResponsiveContainer, CartesianGrid, Cell
 } from 'recharts';
 import api from '../api/axios';
 import NetMovementModal from '../components/NetMovementModal';
+import { Flag, Pin, TrendingUp, User, Flame, LayoutDashboard, X, TrendingDown } from 'lucide-react';
 
 const BAR_COLORS = ['#10b981', '#3b82f6', '#ef4444', '#f59e0b', '#a78bfa'];
 
@@ -30,27 +31,27 @@ export default function Dashboard() {
       .finally(() => setLoading(false));
   }, [filters]);
 
-  const chartData = metrics ? [
+  const chartData = useMemo(() => metrics ? [
     { name: 'Purchases',    value: metrics.breakdown?.purchases  ?? 0 },
     { name: 'Transfer In',  value: metrics.breakdown?.transferIn  ?? 0 },
     { name: 'Transfer Out', value: metrics.breakdown?.transferOut ?? 0 },
     { name: 'Assigned',     value: metrics.assigned ?? 0 },
     { name: 'Expended',     value: metrics.expended ?? 0 },
-  ] : [];
+  ] : [], [metrics]);
 
-  const metricCards = [
-    { title: 'Opening Balance', value: metrics?.openingBalance ?? 0, color: '#94a3b8', icon: '🏁', help: null },
-    { title: 'Closing Balance', value: metrics?.closingBalance ?? 0, color: '#22d3ee', icon: '📌', help: null },
-    { title: 'Net Movement',    value: metrics?.netMovement    ?? 0, color: '#f59e0b', icon: '📈', help: 'Click to see breakdown', onClick: () => setModal(true) },
-    { title: 'Assigned',        value: metrics?.assigned       ?? 0, color: '#10b981', icon: '👤', help: null },
-    { title: 'Expended',        value: metrics?.expended       ?? 0, color: '#ef4444', icon: '💥', help: null },
-  ];
+  const metricCards = useMemo(() => [
+    { title: 'Opening Balance', value: metrics?.openingBalance ?? 0, color: '#94a3b8', icon: <Flag size={18} />, help: null },
+    { title: 'Closing Balance', value: metrics?.closingBalance ?? 0, color: '#22d3ee', icon: <Pin size={18} />, help: null },
+    { title: 'Net Movement',    value: metrics?.netMovement    ?? 0, color: '#f59e0b', icon: <TrendingUp size={18} />, help: 'Click to see breakdown', onClick: () => setModal(true) },
+    { title: 'Assigned',        value: metrics?.assigned       ?? 0, color: '#10b981', icon: <User size={18} />, help: null },
+    { title: 'Expended',        value: metrics?.expended       ?? 0, color: '#ef4444', icon: <Flame size={18} />, help: null },
+  ], [metrics]);
 
   return (
     <div className="page-content">
       <div className="page-header">
         <div>
-          <h1 className="page-title">📊 Dashboard</h1>
+          <h1 className="page-title"><LayoutDashboard size={28} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '8px' }} /> Dashboard</h1>
           <p className="page-subtitle">Real-time asset movement metrics across all bases</p>
         </div>
       </div>
@@ -97,8 +98,9 @@ export default function Dashboard() {
           <button
             className="btn btn-secondary"
             onClick={() => setFilters({ startDate: '', endDate: '', baseId: '', assetType: '' })}
+            style={{ display: 'flex', alignItems: 'center', gap: '4px' }}
           >
-            ✕ Clear
+            <X size={14} /> Clear
           </button>
         )}
       </div>
@@ -126,7 +128,7 @@ export default function Dashboard() {
 
       {/* Chart */}
       <div className="chart-container">
-        <h3 className="chart-title">📉 Asset Movement Overview</h3>
+        <h3 className="chart-title" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><TrendingDown size={20} /> Asset Movement Overview</h3>
         {loading ? (
           <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-muted)' }}>
             Loading chart…

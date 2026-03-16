@@ -1,3 +1,5 @@
+import { BarChart2, Download, ArrowRight, ArrowLeft } from 'lucide-react';
+
 export default function NetMovementModal({ data, onClose }) {
   if (!data) return null;
 
@@ -6,26 +8,26 @@ export default function NetMovementModal({ data, onClose }) {
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-box" onClick={e => e.stopPropagation()}>
-        <h2 className="modal-title">📊 Net Movement Breakdown</h2>
+        <h2 className="modal-title"><BarChart2 size={24} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '8px' }} /> Net Movement Breakdown</h2>
 
         <div className="modal-grid">
           <div className="modal-stat">
             <div className="modal-stat-value" style={{ '--stat-color': '#10b981' }}>
               {data.purchases ?? 0}
             </div>
-            <div className="modal-stat-label">📥 Purchases</div>
+            <div className="modal-stat-label"><Download size={14} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '4px' }} /> Purchases</div>
           </div>
           <div className="modal-stat">
             <div className="modal-stat-value" style={{ '--stat-color': '#3b82f6' }}>
               {data.transferIn ?? 0}
             </div>
-            <div className="modal-stat-label">➡️ Transfer In</div>
+            <div className="modal-stat-label"><ArrowRight size={14} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '4px' }} /> Transfer In</div>
           </div>
           <div className="modal-stat">
             <div className="modal-stat-value" style={{ '--stat-color': '#ef4444' }}>
               {data.transferOut ?? 0}
             </div>
-            <div className="modal-stat-label">⬅️ Transfer Out</div>
+            <div className="modal-stat-label"><ArrowLeft size={14} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '4px' }} /> Transfer Out</div>
           </div>
         </div>
 

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import api from '../api/axios';
 import toast from 'react-hot-toast';
 import { format } from 'date-fns';
+import { RefreshCw, X, Plus, Truck } from 'lucide-react';
 
 const INITIAL_FORM = { assetId: '', fromBaseId: '', toBaseId: '', quantity: '', transferDate: '', notes: '' };
 
@@ -38,7 +39,7 @@ export default function Transfers() {
     setSubmitting(true);
     try {
       await api.post('/transfers', form);
-      toast.success('✅ Transfer recorded successfully');
+      toast.success('Transfer recorded successfully');
       setShowForm(false);
       setForm(INITIAL_FORM);
       load();
@@ -53,7 +54,7 @@ export default function Transfers() {
     <div className="page-content">
       <div className="page-header">
         <div>
-          <h1 className="page-title">🔄 Transfers</h1>
+          <h1 className="page-title"><RefreshCw size={28} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '8px' }} /> Transfers</h1>
           <p className="page-subtitle">Manage asset movement between bases</p>
         </div>
         <button
@@ -61,7 +62,7 @@ export default function Transfers() {
           className="btn btn-primary"
           onClick={() => setShowForm(s => !s)}
         >
-          {showForm ? '✕ Cancel' : '+ New Transfer'}
+          {showForm ? <><X size={16} style={{ display: 'inline', verticalAlign: 'middle' }} /> Cancel</> : <><Plus size={16} style={{ display: 'inline', verticalAlign: 'middle' }} /> New Transfer</>}
         </button>
       </div>
 
@@ -115,8 +116,8 @@ export default function Transfers() {
                 value={form.notes} onChange={e => setForm({ ...form, notes: e.target.value })} />
             </div>
           </div>
-          <button id="tr-submit" className="btn btn-primary" onClick={submit} disabled={submitting}>
-            {submitting ? 'Saving…' : '🚚 Submit Transfer'}
+          <button id="tr-submit" className="btn btn-primary" onClick={submit} disabled={submitting} style={{ display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'center' }}>
+            {submitting ? 'Saving…' : <><Truck size={16} /> Submit Transfer</>}
           </button>
         </div>
       )}
@@ -133,8 +134,9 @@ export default function Transfers() {
         </select>
         {(filters.startDate || filters.endDate || filters.baseId) && (
           <button className="btn btn-secondary"
-            onClick={() => setFilters({ startDate: '', endDate: '', baseId: '' })}>
-            ✕ Clear
+            onClick={() => setFilters({ startDate: '', endDate: '', baseId: '' })}
+            style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <X size={14} /> Clear
           </button>
         )}
       </div>
@@ -153,7 +155,7 @@ export default function Transfers() {
               <tr>
                 <td colSpan={8}>
                   <div className="empty-state">
-                    <div className="empty-state-icon">🔄</div>
+                    <div className="empty-state-icon"><RefreshCw size={48} /></div>
                     <div className="empty-state-text">No transfers yet. Initiate your first transfer above.</div>
                   </div>
                 </td>

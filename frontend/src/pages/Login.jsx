@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
+import { Shield, Lock } from 'lucide-react';
 
 const DEMO_ACCOUNTS = [
   { role: 'Admin',             email: 'admin@mams.mil',       password: 'admin123' },
@@ -41,7 +42,7 @@ export default function Login() {
   return (
     <div className="login-page">
       <div className="login-card">
-        <div className="login-logo">🪖</div>
+        <div className="login-logo"><Shield size={48} color="white" /></div>
         <h1 className="login-title">MAMS</h1>
         <p className="login-subtitle">Military Asset Management System</p>
 
@@ -69,8 +70,9 @@ export default function Login() {
             className="login-btn"
             type="submit"
             disabled={loading}
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
           >
-            {loading ? 'Authenticating…' : '🔐 Sign In'}
+            {loading ? 'Authenticating…' : <><Lock size={18} /> Sign In</>}
           </button>
         </form>
 

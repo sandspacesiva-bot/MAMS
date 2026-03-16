@@ -1,5 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { Lock } from 'lucide-react';
 
 export default function ProtectedRoute({ children, roles }) {
   const { user, loading } = useAuth();
@@ -17,7 +18,7 @@ export default function ProtectedRoute({ children, roles }) {
   if (roles && !roles.includes(user.role)) {
     return (
       <div className="access-denied">
-        <h2>🔒 Access Denied</h2>
+        <h2><Lock size={28} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '8px' }} /> Access Denied</h2>
         <p>You don't have permission to view this page.</p>
       </div>
     );
